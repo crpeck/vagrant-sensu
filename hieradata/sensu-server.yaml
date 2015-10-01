@@ -1,0 +1,80 @@
+---
+rabbitmq::delete_guest_user: true
+rabbitmq::admin_enable: true
+rabbitmq::ssl: true
+rabbitmq::ssl_only: true
+rabbitmq::ssl_cacert: '/etc/rabbitmq/ssl/ca-cert.pem'
+rabbitmq::ssl_cert: '/etc/rabbitmq/ssl/server-cert.pem'
+rabbitmq::ssl_key: '/etc/rabbitmq/ssl/server-key.pem'
+rabbitmq::repos_ensure: true
+sensu::server: true
+sensu::api: true
+sensu::install_repo: true
+sensu::use_embedded_ruby: true
+sensu::sensu_plugin_version: present
+sensu::subscriptions: [ 'base', 'sensu-server' ]
+sensu::client_address: 10.254.254.10
+sensu::rabbitmq_ssl_private_key: '/etc/sensu/ssl/client-key.pem'
+sensu::rabbitmq_ssl_cert_chain: '/etc/sensu/ssl/client-cert.pem'
+rabbitmq_admin_user: 'admin'
+rabbitmq_host: '10.254.254.10'
+sensu_rabbitmq_user: 'sensu'
+sensu_server_hostname: '10.254.254.10'
+sensu_default_mailfrom: 'sensu+alerts@localhost'
+sensu_default_smtp_server: 'localhost'
+sensu_default_smtp_port: '25'
+sensu_default_smtp_domain: 'localhost'
+rabbitmq_admin_password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAIVlEHViO52wVoWyWuNeLgCG+ajMjGJnGeArL7E7cjcuQMJvu6aZKWjkoO7Nj2fexVxn98ry6IKBoGlqf99vt8e/aPsI/g3dcX/4s/j3aLe6bnM0v39gjx/LcpPXf+WCl+X1tecsNBBlAVqPS+7GhM5xIkyT8Iks3EPokmWtmP2FXO4+6E5xgQlWsQzo8xYJhbKtaqZcevrq3GS6y/kl/HXJEwxYF7flS7yS7jo+8wxjF6Oc01RUxtI9AglFSZVyedh9x/k1VZydCc1OreGJhbQpGJzB9fMilLEQEY61mQpOoqqIhPxC+xIC21Bwm/Jp+gON0ieJpvYbvb7UkUQvpXzA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBB/MlWRMrzgty50H1Z4O2BWgBD1BeTG4TRE64DT153Jx7lF]
+sensu_rabbitmq_password: ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAkkOCQWZ7evrIQCo/brFOtdt6Y2aPreHoblmuyP7IgAXzWbjDjLN7E3Jjo0oUaD1yDOxjdM+HQnuQzDY8QfK1JuDUg1JwaY9fyHysXLB3kbFbRpwDLwZEZmSCwhTnvR1Ae7Bzk+en5RRWqZTC1pE98QEdSlZWnOIOc8yTVT+XsTEKTLJ0J+6OPS1doMrwiy7026TK+WQr+GnLROgvDMWGxIDMf8SpmNblx2OdBdDPXTuu4XDhKd3cxBzk2/R7u58Oqj77B1HCabtHkVNaDuM8El9d1vxlpTZ09h1ZiQR4kmUHA+OmbGxOkD4u92RC3SAWIk46+0JFMvaLiLTxUNCEETA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBD7nSWkdzgypLoZbLyJUlvYgBBYkjSdhmD8NPv6tqrHz5SX]
+sensu::checks:
+  'check_cpu':
+    command: '/opt/etc/sensu/plugins/check-cpu.rb'
+    handlers: 'default'
+    standalone: false
+    subscribers: 'base'
+  'check_cron':
+    command: '/opt/etc/sensu/plugins/check-procs.rb -p cron -C 1'
+    handlers: 'default'
+    standalone: false
+    subscribers: 'base'
+  'check_apache2':
+    command: '/opt/etc/sensu/plugins/check-procs.rb -p apache2 -C 1'
+    handlers: 'default'
+    standalone: false
+    subscribers: 'webserver'
+  'check_disk':
+    command: '/opt/etc/sensu/plugins/check-disk.rb'
+    handlers: 'default'
+    standalone: false
+    subscribers: 'base'
+  'check_load':
+    command: '/opt/etc/sensu/plugins/check-load.rb --per-core --warn 5,10,15 --crit 15,25,35'
+    handlers: 'default'
+    standalone: false
+    subscribers: 'base'
+  'check_ntp':
+    command: 'PATH=$PATH:/usr/lib/nagios/plugins check_ntp_time -H pool.ntp.org -w 30 -c 60'
+    handlers: 'default'
+    standalone: false
+    subscribers: 'base'
+  'check_uname':
+    command: '/bin/uname -a'
+    standalone: false
+    subscribers: 'testclient'
+  'check_mailq':
+    command: '/opt/etc/sensu/plugins/check-mailq.rb -w 10 -c 20'
+    handlers: 'default'
+    standalone: false
+    subscribers: 'mailserver'
+  'check_redis_memory':
+    command: '/opt/etc/sensu/plugins/check-redis-memory.rb -h localhost -p 6379 -w 900 -c 1000'
+    handlers: 'default'
+    subscribers: 'sensu-server'
+  'check_https-cert-google':
+    command: '/opt/etc/sensu/plugins/check-https-cert.rb -c 14 -u https://google.com'
+    handlers: 'default'
+    subscribers: 'sensu-server'
+  'check_https-google':
+    command: '/usr/lib/nagios/plugins/check_http --ssl --host=google.com'
+    handlers: 'default'
+    subscribers: 'sensu-server'

@@ -1,0 +1,10 @@
+.vagrant
+.tmp
+puppet/modules/*
+!.gitignore
+.Vagrantfile.swp
+crpeck-contact.json
+flapjack.json
+flapjack.rb
+puppet/manifests/site.pp
+puppet/Puppetfile.lock

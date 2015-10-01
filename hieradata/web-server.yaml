@@ -1,0 +1,6 @@
+---
+sensu_server_hostname: '10.254.254.10'
+sensu::client_address: 10.254.254.12
+sensu::subscriptions: 
+  - base
+  - webserver

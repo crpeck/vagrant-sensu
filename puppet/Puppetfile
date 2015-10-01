@@ -1,0 +1,26 @@
+forge 'https://forgeapi.puppetlabs.com'
+mod 'puppetlabs/stdlib', '4.7.0'
+mod 'puppetlabs/apt', '2.1.1'
+mod 'puppetlabs/ntp', '3.3.0'
+mod 'maestrodev/wget', '1.7.0'
+mod 'nanliu/staging', '1.0.3'
+#mod 'puppetlabs/rabbitmq', '5.2.3'
+# adds --no-check-certificate to wget so self-signed certs work
+mod 'rabbitmq',
+  :git => 'https://github.com/crpeck/puppetlabs-rabbitmq.git',
+  :ref => 'b0c96fb48c322e748b7059f8cd2a70d1b4f15a2f'
+mod 'sensu/sensu',
+  :git => 'https://github.com/sensu/sensu-puppet.git',
+  :ref => '4cac51f06459dbce3f8b7c04b0e6e45b60ea2513'
+mod 'yelp/uchiwa', '0.3.0'
+mod 'dwerder/redis', '1.6.0'
+mod 'puppetlabs/concat', '1.2.1'
+mod 'puppetlabs/inifile', '1.2.0'
+mod 'puppetlabs/mysql', '2.3.1'
+mod 'puppetlabs/git', '0.3.0'
+mod 'puppetlabs/vcsrepo', '1.2.0'
+mod 'puppetlabs/apache',
+  :git => 'https://github.com/puppetlabs/puppetlabs-apache',
+  :ref => '3ef6c41b4eb9d1696c7e57584886228f53bb2522'
+mod 'herculesteam/augeasproviders_ssh', '2.2.1'
+mod 'herculesteam/augeasproviders_core', '2.1.1'

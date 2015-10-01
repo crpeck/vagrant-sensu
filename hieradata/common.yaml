@@ -1,0 +1,19 @@
+---
+classes:
+  - sensu
+sensu::purge:
+  config: true
+sensu::rabbitmq_host: '10.254.254.10'
+sensu::rabbitmq_password:  ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAkkOCQWZ7evrIQCo/brFOtdt6Y2aPreHoblmuyP7IgAXzWbjDjLN7E3Jjo0oUaD1yDOxjdM+HQnuQzDY8QfK1JuDUg1JwaY9fyHysXLB3kbFbRpwDLwZEZmSCwhTnvR1Ae7Bzk+en5RRWqZTC1pE98QEdSlZWnOIOc8yTVT+XsTEKTLJ0J+6OPS1doMrwiy7026TK+WQr+GnLROgvDMWGxIDMf8SpmNblx2OdBdDPXTuu4XDhKd3cxBzk2/R7u58Oqj77B1HCabtHkVNaDuM8El9d1vxlpTZ09h1ZiQR4kmUHA+OmbGxOkD4u92RC3SAWIk46+0JFMvaLiLTxUNCEETA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBD7nSWkdzgypLoZbLyJUlvYgBBYkjSdhmD8NPv6tqrHz5SX]
+sensu::rabbitmq_port: '5671'
+sensu::rabbitmq_user: 'sensu'
+sensu::rabbitmq_vhost: '/sensu'
+sensu::server: false
+sensu::api: false
+sensu::use_embedded_ruby: true
+sensu::sensu_plugin_version: present
+sensu::subscriptions:
+  - base
+sensu::checks:
+  'check_https-google':
+    command: '/usr/lib/nagios/plugins/check_http --ssl --host=google.com'

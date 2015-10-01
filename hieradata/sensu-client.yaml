@@ -1,0 +1,15 @@
+---
+sensu::subscriptions:
+    - testclient
+    - base
+sensu::client_address: 10.254.254.11
+sensu::safe_mode: true
+sensu::checks:
+  'check_cpu':
+    command: '/opt/etc/sensu/plugins/check-cpu.rb'
+  'check_cron':
+    command: '/opt/etc/sensu/plugins/check-procs.rb -p cron -C 1'
+  'check_disk':
+    command: '/opt/etc/sensu/plugins/check-disk.rb'
+  'check_load':
+    command: '/opt/etc/sensu/plugins/check-load.rb --per-core --warn 5,10,15 --crit 25,35,45'

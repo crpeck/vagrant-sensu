@@ -1,0 +1,2 @@
+#!/bin/bash
+eyaml encrypt --pkcs7-private-key=eyaml_keys/private_key.pkcs7.pem --pkcs7-public-key=eyaml_keys/public_key.pkcs7.pem -f tools/ssl_certs/server/key.pem -o string

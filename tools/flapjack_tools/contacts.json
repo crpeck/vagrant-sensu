@@ -1,0 +1,16 @@
+[
+  {
+    "id": "001",
+    "first_name": "Fred",
+    "last_name": "Flintstone",
+    "email": "fflintstone@bedrock.org",
+    "timezone": "America/New_York",
+    "media": {
+      "sms": "+18885551212",
+      "email": "fflintstone@bedrock.org"
+    },
+    "tags": [
+      "source:titanium"
+    ]
+  }
+]
